@@ -34,7 +34,7 @@ and access Spree application from your browser:
 
 ###Administration Console
 
-The Spree administration console can be accessed by the below URL. The default credentials are username **spree@example.com** and password **spree123**.
+The Spree administration console can be accessed by the below URL. The default credentials are username ```spree@example.com``` and password ```spree123```.
 
 
      http://localhost:3000/admin
