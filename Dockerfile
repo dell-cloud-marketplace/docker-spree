@@ -1,30 +1,61 @@
-## generate and run a rails app with github.com/spree/spree installed
-##
-## docker build -t rlister/spree .
-## docker run -it -p 3000:3000 rlister/spree
+FROM ubuntu:trusty
+MAINTAINER Dell Cloud Market Place <Cloud_Marketplace@dell.com>
 
-FROM rlister/ruby:2.1.2
 
-MAINTAINER Ric Lister, rlister@gmail.com
+# Set environment variable for package install
+ENV DEBIAN_FRONTEND noninteractive
 
+# Install packages
 RUN apt-get update && apt-get install -yq \
     git \
     nodejs \
     imagemagick \
     libsqlite3-dev \
-    sqlite3
+    sqlite3 \
+    zlib1g-dev \
+    build-essential \
+    libssl-dev \
+    libreadline-dev \
+    libyaml-dev \
+    libcurl4-openssl-dev 
 
-RUN echo "gem: --no-rdoc --no-ri" >> ~/.gemrc
+
+# Install Ruby
+ADD http://ftp.ruby-lang.org/pub/ruby/2.1/ruby-2.1.4.tar.gz /tmp/
+RUN \
+  cd /tmp && \
+  tar -xzvf ruby-*.tar.gz && \
+  rm -f ruby-*.tar.gz && \
+  cd ruby-* && \
+  ./configure --disable-install-doc && \
+  make && \
+  make install && \
+  cd .. && \
+  rm -rf ruby-*
+
+
+# Install Ruby Gems
+RUN gem install bundler --no-rdoc --no-ri
+
+# Install Rails
 RUN gem install rails -v 4.1.6
-RUN gem install spree
 
+# Install Spree
+RUN gem install spree -v 2.3.4
+
+# Create Rails application
 RUN rails _4.1.6_ new /app -s
+
+# Add Rails application to Spree
 RUN spree install -A /app
 
+# Spree directory
 WORKDIR /app
 
+# Expose Spree port
 EXPOSE 3000
 
+# Command to start Rails Server
 ENTRYPOINT [ "bin/bundle", "exec" ]
 
 CMD [ "rails", "server" ]
