@@ -49,13 +49,18 @@ RUN rails _4.1.6_ new /app -s
 # Add Rails application to Spree
 RUN spree install -A /app
 
+RUN cp -r /app /tmp/
+
+# Set volume folder for spree applciation files
+VOLUME /app
+
 # Spree directory
 WORKDIR /app
 
+# Run scripts
+ADD run.sh /run.sh
+RUN chmod 755 /*.sh
+
 # Expose Spree port
 EXPOSE 3000
-
-# Command to start Rails Server
-ENTRYPOINT [ "bin/bundle", "exec" ]
-
-CMD [ "rails", "server" ]
+CMD ["/run.sh"]
