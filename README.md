@@ -31,6 +31,13 @@ and access Spree application from your browser:
 
     http://localhost:3000/
 
+### Advanced Example 1
+To start your image with a app volume (which will survive a restart) for the Spree application, database and configuration files, do:
+
+    sudo docker run -d -p 3000:3000 -v /app:/app --name spree dell/spree
+
+The Spree application, database and configuration files will be available in **/app** on the host.
+
 
 ###Administration Console
 
@@ -42,7 +49,7 @@ The Spree administration console can be accessed by the below URL. The default c
 
 ###Administration
 
-There is a full documentation on using Spree, customisation and REST API information. This can be found from the below URL.
+There is comprehensive documentation on using Spree, customisation and REST API information. This can be found from the below URL.
 
 * [Guides](http://guides.spreecommerce.com/)
 * [API Guide](http://guides.spreecommerce.com/api/)
