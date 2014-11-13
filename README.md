@@ -50,7 +50,7 @@ The Spree administration console can be accessed by the below URL. The default c
 
 ###Database Management
 
-The SQLite database files can be found under ***app/db*** within the container or via the mapped volume folder ***/app***. To access the database command line sqlite program, the first step is to install nsenter (with Docker 1.2) on the host. If you are a DCM user, please ssh into the instance and then enter ***sqlite3*** in the command line.
+The SQLite database files can be found under ***app/db*** within the container or via the mapped volume folder ***/app***. To access the database command line sqlite program, the first step is to install [nsenter](https://github.com/jpetazzo/nsenter) (with Docker 1.2) on the host. If you are a DCM user, please ssh into the instance and then enter ***sqlite3*** in the command line.
 
 ###Administration
 
