@@ -51,8 +51,9 @@ The Spree administration console can be accessed by the below URL. The default c
 
 There is comprehensive documentation on using Spree, customisation and REST API information. This can be found from the below URL.
 
-* [Guides](http://guides.spreecommerce.com/)
-* [API Guide](http://guides.spreecommerce.com/api/)
+* [Spree Guides](http://guides.spreecommerce.com/)
+* [Spree API Guide](http://guides.spreecommerce.com/api/)
+* [Spree Source](https://github.com/spree/spree/tree/2-4-stable)
 
 
 
