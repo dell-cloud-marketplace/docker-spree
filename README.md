@@ -12,6 +12,7 @@ Ubuntu        | Trusty     | Operating system
 Spree         | 2.3.4      | E-commerce software
 Ruby          | 2.1.4      | Programming language
 Ruby on Rails | 4.1.6      | Web application framework
+SQLite        | 3.8.2      | Database
 
 ## Usage
 
@@ -46,6 +47,10 @@ The Spree administration console can be accessed by the below URL. The default c
 
      http://localhost:3000/admin
 
+
+###Database Management
+
+The SQLite database files can be found under ***app/db*** within the container or via the mapped volume folder ***/app***. To access the database command line sqlite program, the first step is to install nsenter (with Docker 1.2) on the host. If you are a DCM user, please ssh into the instance and then enter ***sqlite3*** in the command line.
 
 ###Administration
 
