@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM dell/mysql
 MAINTAINER Dell Cloud Market Place <Cloud_Marketplace@dell.com>
 
 
@@ -10,14 +10,13 @@ RUN apt-get update && apt-get install -yq \
     git \
     nodejs \
     imagemagick \
-    libsqlite3-dev \
-    sqlite3 \
     zlib1g-dev \
     build-essential \
     libssl-dev \
     libreadline-dev \
     libyaml-dev \
-    libcurl4-openssl-dev 
+    libcurl4-openssl-dev \
+    libmysqlclient-dev
 
 
 # Install Ruby
@@ -37,6 +36,9 @@ RUN \
 # Install Ruby Gems
 RUN gem install bundler --no-rdoc --no-ri
 
+# Install adapter for mysql
+RUN gem install mysql2
+
 # Install Rails
 RUN gem install rails -v 4.1.6
 
@@ -44,14 +46,14 @@ RUN gem install rails -v 4.1.6
 RUN gem install spree -v 2.3.4
 
 # Create Rails application
-RUN rails _4.1.6_ new /app -s
+RUN rails _4.1.6_ new /app -s -d mysql
 
 # Add Rails application to Spree
 RUN spree install -A /app
 
 RUN cp -r /app /tmp/
 
-# Set volume folder for spree applciation files
+# Set volume folder for spree application files
 VOLUME /app
 
 # Spree directory
