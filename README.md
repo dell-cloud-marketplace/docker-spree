@@ -65,7 +65,7 @@ Followed by copying the necessary migrations if it is an extension.
 
     bundle exec rails g gem_name:install
 
-In general Spree follows an MVC framework. Models, views and controllers reside under directory ***/app/app***. The assets directory is where the stylesheets, JavaScript and images can be found. There are guidelines on how best to customise Spree website in particular Spree’s Asset Pipeline (https://github.com/spree/spree-guides/blob/master/content/developer/customization/asset.markdown).
+In general Spree follows an MVC framework. Models, views and controllers reside under directory ***/app/app***. The assets directory is where the stylesheets, JavaScript and images can be found. There are guidelines on how best to customise Spree website in particular [Spree’s Asset Pipeline](https://github.com/spree/spree-guides/blob/master/content/developer/customization/asset.markdown).
 
 ###Administration
 
