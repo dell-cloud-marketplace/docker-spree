@@ -100,7 +100,7 @@ In case you wish to seed the database with some data the below commands can be r
 
 ###Customisation
 
-Spree supports extensions that provide the facility to customise Spree website. Extensions are reusable  code that facilitate a range of functionality, they can be found in the  [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file(this resides in the project root folder /app).  Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app**, this requires to be run from within the container.
+Spree supports extensions that provide the facility to customise Spree website. Extensions are reusable  code that facilitate a range of functionality, they can be found in the  [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file(this resides in the project root folder ***/app***).  Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container.
 
 To Do:
 
