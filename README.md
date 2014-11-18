@@ -94,7 +94,7 @@ To create a new database and apply the migrations, do:
     
     rake db:create db:migrate
 
-In case you wish to seed the database with some data the below commands can be run, do:
+In case you wish to add some sample data the below commands can be run, enter default email ```spree@example.com``` and password ```spree123``` when requested, do:
 
     rake db:seed rake db:sample
 
