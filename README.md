@@ -86,9 +86,9 @@ The Spree administration console can be accessed by the below URL. The default c
 
 ###Database Management
 
-Spree Database configuration details can be located from Database.yaml, currently there is no sample data (please see below if you wish to add sample data). If changes to the database are required the tool rake is used from within the container. 
+Spree database configuration details can be located from Database.yaml, currently there is no sample data (please see below if you wish to add sample data). If changes to the database are required the tool rake is used from within the container. 
 
-Currently (with Docker 1.2), the first step is to install [nsenter](https://github.com/jpetazzo/nsenter) on the host. If you are a DCM user, please ssh into the instance and go to the ***/app*** directory. Below are a few useful commands.
+Currently (with Docker 1.2), the first step is to install [nsenter](https://github.com/jpetazzo/nsenter) on the host. If you are a DCM user, please ssh into the instance. Below are a few useful commands that should be run from the ***/app*** directory.
 
 To create a new database and apply the migrations, do:
     
