@@ -1,4 +1,4 @@
-FROM dell/mysql
+FROM ubuntu:trusty
 MAINTAINER Dell Cloud Market Place <Cloud_Marketplace@dell.com>
 
 
@@ -7,6 +7,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Install packages
 RUN apt-get update && apt-get install -yq \
+    mysql-server=5.5.40-0ubuntu0.14.04.1 \
     git \
     nodejs \
     imagemagick \
@@ -17,6 +18,20 @@ RUN apt-get update && apt-get install -yq \
     libyaml-dev \
     libcurl4-openssl-dev \
     libmysqlclient-dev
+
+
+# Copy configuration files
+ADD start-mysqld.sh /start-mysqld.sh
+ADD run.sh /run.sh
+RUN chmod 755 /*.sh
+ADD my.cnf /etc/mysql/conf.d/my.cnf
+
+# Remove pre-installed database
+RUN rm -rf /var/lib/mysql/*
+
+# Add MySQL utils
+ADD create_mysql_admin_user.sh /create_mysql_admin_user.sh
+RUN chmod 755 /*.sh
 
 
 # Install Ruby
@@ -51,18 +66,16 @@ RUN rails _4.1.6_ new /app -s -d mysql
 # Add Rails application to Spree
 RUN spree install -A /app
 
+
 RUN cp -r /app /tmp/
 
 # Set volume folder for spree application files
-VOLUME /app
+VOLUME ["/app", "/var/lib/mysql"]
 
 # Spree directory
 WORKDIR /app
 
-# Run scripts
-ADD run.sh /run.sh
-RUN chmod 755 /*.sh
 
 # Expose Spree port
-EXPOSE 3000
+EXPOSE 3000 3306
 CMD ["/run.sh"]
