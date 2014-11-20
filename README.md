@@ -28,7 +28,7 @@ Do:
 
     sudo docker run -d -p 3000:3000 -p 3306:3306 --name spree dell/spree
 
-and access Spree application from your browser:
+and access Spree application from your browser, this can take some time due to scripts running during container start up but usually is under a mintue:
 
     http://localhost:3000/
 
