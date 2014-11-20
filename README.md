@@ -35,7 +35,7 @@ and access Spree application from your browser:
 ### Advanced Example 1
 To start your image with an app volume (which will survive a restart) for the Spree application this includes the database and configuration files, do:
 
-    sudo docker run -d -p 3000:3000 -v /app:/app --name spree dell/spree
+    sudo docker run -d -p 3000:3000 -p 3306:3306 -v /app:/app --name spree dell/spree
 
 ### Advanced Example 2
 * To start your image with two data volumes (which will survive a restart). The MySQL data is available in ***/data/mysql*** on the host. The Spree application files are available in ***/app*** on the host.
