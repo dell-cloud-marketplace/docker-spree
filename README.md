@@ -78,7 +78,7 @@ You can then connect to the admin console...
      
 ###Administration Web Console
 
-The Spree administration console can be accessed by the below URL. Enter the admin credentials set up or if sample data is populated use the credentials set up (if not changed by default these credentials are username ```spree@example.com``` and password ```spree123```).
+The Spree administration console can be accessed by the below URL. Enter the admin credentials set up or if sample data is populated use the credentials set up (if these are the default credentials the username is ```spree@example.com``` and password ```spree123```).
 
      http://localhost:3000/admin
 
@@ -93,9 +93,15 @@ To create a new database and apply the migrations, do:
     
     rake db:create db:migrate
 
-In case you wish to add some sample data the below commands can be run, enter default email ```spree@example.com``` and password ```spree123``` when requested, do:
+In case you wish to add some sample data run the below commands, enter default email ```spree@example.com``` and password ```spree123``` for admin user or prefered credentials when requested, do:
 
-    rake db:seed rake db:sample
+    rake db:seed
+
+followed by:
+
+    spree_sample:load
+    
+Please note the updated changes will require a Rails Server restart.
 
 ###Customisation
 
