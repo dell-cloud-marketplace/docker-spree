@@ -1,27 +1,26 @@
 #!/bin/bash
 
 VOLUME_HOME="/app"
-VOLUME_HOME_MYSQL="/var/lib/mysql"
+VOLUME_MYSQL="/var/lib/mysql"
 
 
 # Test if VOLUME_HOME has content
 if [[ ! "$(ls -A $VOLUME_HOME)" ]]; then
      echo "Add Spree at $VOLUME_HOME"
      cp -R /tmp/app/* $VOLUME_HOME
-  fi
-
+fi
 
 
 # Test MySQL VOLUME_HOME_MYSQL has content
-if [[ ! -d $VOLUME_HOME/mysql ]]; then
-     echo "=> An empty or uninitialized MySQL volume is detected in $VOLUME_HOME_MYSQL"
-     echo "=> Installing MySQL ..."
-     mysql_install_db > /dev/null 2>&1
-     echo "=> Done!"
-     /create_mysql_admin_user.sh
- else
-     echo "=> Using an existing volume of MySQL"
- fi
+if [[ ! -d $VOLUME_MYSQL/mysql ]]; then
+   echo "=> An empty or uninitialized MySQL volume is detected in $VOLUME_MYSQL"
+   echo "=> Installing MySQL ..."
+   mysql_install_db > /dev/null 2>&1
+   echo "=> Done!"
+   /create_mysql_admin_user.sh
+else
+    echo "=> Using an existing volume of MySQL"
+fi
 
 
 # Start MySQL
@@ -36,10 +35,16 @@ while [[ RET -ne 0 ]]; do
 done
 
 
+
 # Create Spree database
 cd /app && rake db:create db:migrate
 
 
-# Start the Rails Server
-echo "Start Rails Server"
-/app/bin/bundle exec rails server
+# Add Spree authentication if not added
+if [ ! -f "$VOLUME_HOME/config/initializers/devise.rb" ]; then
+  cd /app && bundle exec rails g spree:auth:install
+fi
+
+#/app/bin/bundle exec rails server
+
+exec supervisord -n 
