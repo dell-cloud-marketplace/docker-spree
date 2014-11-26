@@ -117,9 +117,9 @@ Followed by copying the necessary migrations if it is an extension.
 
 In general Spree follows an MVC framework. Models, views and controllers reside under directory ***/app/app***. The assets directory is where the stylesheets, JavaScript and images can be found. There are guidelines on how best to customise Spree website in particular [Spree’s Asset Pipeline](https://github.com/spree/spree-guides/blob/master/content/developer/customization/asset.markdown).
 
-###Guides
+###Getting Started
 
-There is comprehensive documentation on using Spree, customisation and REST API information. This can be found from the below URL.
+There is comprehensive documentation on using Spree, customisation and REST API information. Below are some guidelines and documentation as a starting guide.
 
 * [Spree Guides](http://guides.spreecommerce.com/)
 * [Spree API Guide](http://guides.spreecommerce.com/api/)
