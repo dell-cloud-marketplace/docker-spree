@@ -28,7 +28,7 @@ Do:
 
     sudo docker run -d -p 3000:3000 -p 3306:3306 --name spree dell/spree
 
-and access Spree application from your browser, this can take some time due to scripts running during container start up but usually is under a mintue:
+To access the Spree application from your browser, this can take some time due to scripts running during container start up but usually is under a mintue, do:
 
     http://localhost:3000/
 
@@ -56,8 +56,6 @@ To start your image with an app volume (which will survive a restart) for the Sp
 
 ### Connecting to MySQL
 The first time that you run your container, a new user admin with all privileges will be created in MySQL with a random password. To get the password, check the container logs (```docker logs spree```). You will see output like the following:
-    
-You will see some output like the following:
 
     ===================================================================
     You can now connect to this MySQL Server using:
@@ -69,16 +67,16 @@ You will see some output like the following:
     ===================================================================
 
 
-In this case, **ca1w7dUhnIgI** is the password allocated to the admin user.
+In this case, **47nnf4FweaKu** is the password allocated to the admin user.
 
 You can then connect to the admin console...
 
-    mysql -u admin -p ca1w7dUhnIgI --host 127.0.0.1 --port 3306
+    mysql -u admin -p 47nnf4FweaKu --host 127.0.0.1 --port 3306
 
      
 ###Administration Web Console
 
-The Spree administration console can be accessed by the below URL. Enter the admin credentials set up or if sample data is populated use the credentials set up (if these are the default credentials the username is ```spree@example.com``` and password ```spree123```).
+The Spree administration console can be accessed by the below URL. Enter the admin credentials set up or if sample data is populated use the credentials set up (if these are the default credentials, the username is ```spree@example.com``` and password ```spree123```).
 
      http://localhost:3000/admin
 
@@ -101,7 +99,7 @@ followed by:
 
     spree_sample:load
     
-Please note the updated changes will require a Rails Server restart.
+Please note the updated changes will require a Rails Server restart from the container.
 
 ###Customisation
 
