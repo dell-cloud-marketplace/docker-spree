@@ -28,7 +28,7 @@ Do:
 
     sudo docker run -d -p 3000:3000 -p 3306:3306 --name spree dell/spree
 
-To access the Spree application from your browser, this can take some time due to scripts running during container start up but usually is under a mintue, do:
+To access the Spree application from your browser (this can take some time due to scripts running during container start up but usually is under a mintue), do:
 
     http://localhost:3000/
 
@@ -76,34 +76,20 @@ You can then connect to the admin console...
      
 ###Administration Web Console
 
-The Spree administration console can be accessed by the below URL. Enter the admin credentials set up or if sample data is populated use the credentials set up (if these are the default credentials, the username is ```spree@example.com``` and password ```spree123```).
+The Spree administration console can be accessed by the below URL. Enter the admin default credentials username ```spree@example.com``` and password ```spree123```.
 
      http://localhost:3000/admin
 
 
 ###Database Management
 
-Spree database configuration details can be located from database.yml, currently there is no sample data (please see below if you wish to add sample data). If changes to the database are required the tool rake is used from within the container. 
+Spree database configuration details can be located from database.yml on the host if volume mapping is set up. If changes to the database are required the tool rake is used from within the container. 
 
-Currently (with Docker 1.2), the first step is to install [nsenter](https://github.com/jpetazzo/nsenter) on the host. If you are a DCM user, please ssh into the instance. Below are a few useful commands that should be run from the ***/app*** directory.
-
-To create a new database and apply the migrations, do:
-    
-    rake db:create db:migrate
-
-In case you wish to add some sample data run the below commands, enter default email ```spree@example.com``` and password ```spree123``` for admin user or prefered credentials when requested, do:
-
-    rake db:seed
-
-followed by:
-
-    spree_sample:load
-    
-Please note the updated changes will require a Rails Server restart from the container.
+Currently (with Docker 1.2), the first step is to install [nsenter](https://github.com/jpetazzo/nsenter) on the host. If you are a DCM user, please ssh into the instance. Below are a few useful commands that should be run from the ***/app*** directory. Please note the updated changes will require a Rails Server restart from the container.
 
 ###Customisation
 
-Spree supports extensions that provide the facility to customise Spree website. Extensions are reusable  code that facilitate a range of functionality, they can be found in the  [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file(this resides in the project root folder ***/app***).  Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container.
+Spree supports extensions that provide the facility to customise Spree website. Extensions are reusable  code that facilitate a range of functionality, they can be found in the  [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file(this resides in the project root folder ***/app*** which can be accessed from the host).  Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container.
 
 To Do:
 
