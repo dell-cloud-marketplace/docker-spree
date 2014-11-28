@@ -1,7 +1,6 @@
 FROM dell/rails
 MAINTAINER Dell Cloud Market Place <Cloud_Marketplace@dell.com>
 
-
 # Set environment variable for package install
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -12,16 +11,13 @@ RUN apt-get update && apt-get install -yq \
     nodejs \
     imagemagick \
     zlib1g-dev \
-    libmysqlclient-dev \
-    supervisor
+    libmysqlclient-dev
 
 
 # Copy configuration files
-ADD start-mysqld.sh /start-mysqld.sh
 ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 ADD my.cnf /etc/mysql/conf.d/my.cnf
-ADD supervisord-rails.conf /etc/supervisor/conf.d/supervisord-rails.conf
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql/*
@@ -39,9 +35,6 @@ RUN gem install spree -v 2.3.4
 # Create Rails application
 RUN rails _4.1.6_ new /app -s -d mysql
 
-# Add Rails application to Spree
-RUN spree install -A /app
-
 RUN cp -r /app /tmp/
 
 # Set volume folder for spree application files
@@ -49,7 +42,6 @@ VOLUME ["/app", "/var/lib/mysql"]
 
 # Spree directory
 WORKDIR /app
-
 
 # Expose Spree port
 EXPOSE 3000 3306

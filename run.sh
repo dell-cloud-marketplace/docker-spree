@@ -3,13 +3,11 @@
 VOLUME_HOME="/app"
 VOLUME_MYSQL="/var/lib/mysql"
 
-
 # Test if VOLUME_HOME has content
 if [[ ! "$(ls -A $VOLUME_HOME)" ]]; then
      echo "Add Spree at $VOLUME_HOME"
      cp -R /tmp/app/* $VOLUME_HOME
 fi
-
 
 # Test MySQL VOLUME_HOME_MYSQL has content
 if [[ ! -d $VOLUME_MYSQL/mysql ]]; then
@@ -22,7 +20,6 @@ else
     echo "=> Using an existing volume of MySQL"
 fi
 
-
 # Start MySQL
 /usr/bin/mysqld_safe > /dev/null 2>&1 &
 
@@ -34,17 +31,17 @@ while [[ RET -ne 0 ]]; do
   RET=$?
 done
 
-
-
 # Create Spree database
 cd /app && rake db:create db:migrate
 
+# Install Spree
+spree install -A /app
 
 # Add Spree authentication if not added
 if [ ! -f "$VOLUME_HOME/config/initializers/devise.rb" ]; then
   cd /app && bundle exec rails g spree:auth:install
 fi
 
-#/app/bin/bundle exec rails server
+# Start Rails server
+/app/bin/bundle exec rails server
 
-exec supervisord -n 
