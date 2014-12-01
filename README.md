@@ -8,11 +8,11 @@ The software stack comprises the following components:
 
 Name          | Version    | Description
 --------------|------------|------------------------------
-Ubuntu        | Trusty     | Operating system
-Spree         | 2.3.4      | E-commerce software
-Ruby          | 2.1.4      | Programming language
-Ruby on Rails | 4.1.6      | Web application framework
-MySQL         | 5.6        | Database
+Ubuntu        | Trusty             | Operating system
+Spree         | 2.3.4              | E-commerce software
+MySQL         | 5.6                | Database
+Ruby          | see [docker-rails](https://github.com/dell-cloud-marketplace/docker-rails/) | Programming language
+Ruby on Rails | see [docker-rails](https://github.com/dell-cloud-marketplace/docker-rails/)     | Web application framework
 
 ## Usage
 
@@ -55,7 +55,7 @@ To start your image with an app volume (which will survive a restart) for the Sp
 ## Administration
 
 ### Connecting to MySQL
-The first time that you run your container, a new user admin with all privileges will be created in MySQL with a random password. To get the password, check the container logs (```docker logs spree```). You will see output like the following:
+The first time that you run your container, a new user 'admin' with all privileges will be created in MySQL with a random password. To get the password, check the container logs (```docker logs spree```). You will see output like the following:
 
     ===================================================================
     You can now connect to this MySQL Server using:
