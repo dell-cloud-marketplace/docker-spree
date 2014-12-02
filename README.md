@@ -42,14 +42,13 @@ To start your image with an app volume (which will survive a restart) for the Sp
 * A predefined password for the MySQL admin user.
 
 ```no-highlight
-    sudo docker run -d \
-    -p 3000:3000 \
-    -p 3306:3306 \
-    -v /app:/app \
-    -v /data/mysql:/var/lib/mysql \
-    -e MYSQL_PASS="mypass"  \
-    --name spree \
-    dell/spree
+sudo docker run -d \
+-p 3000:3000 \
+-p 3306:3306 \
+-v /app:/app \
+-v /data/mysql:/var/lib/mysql \
+-e MYSQL_PASS="mypass"  \
+--name spree dell/spree
 ```
 
 ## Administration
