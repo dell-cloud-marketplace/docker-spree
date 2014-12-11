@@ -1,18 +1,20 @@
 #docker-spree
-This is a base Docker image to run a [Spree Commerce](http://spreecommerce.com/) - an open-source e-commerce Rails application.
+This is a base Docker image to run a [Spree Commerce](http://spreecommerce.com/) - an open-source e-commerce Rails application. This image extends the [dell/docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base) image which adds Phusion Passengner and Ngnix. Please refer to the README.md for selected images for more info.
 
 
 
 ## Components
 The software stack comprises the following components:
 
-Name          | Version    | Description
---------------|------------|------------------------------
-Ubuntu        | Trusty             | Operating system
-Spree         | 2.3.4              | E-commerce software
-MySQL         | 5.6                | Database
-Ruby          | see [docker-rails](https://github.com/dell-cloud-marketplace/docker-rails/) | Programming language
-Ruby on Rails | see [docker-rails](https://github.com/dell-cloud-marketplace/docker-rails/)     | Web application framework
+Name              | Version    | Description
+------------------|------------|------------------------------
+Ubuntu            | Trusty             | Operating system
+Spree             | 2.3.4              | E-commerce software
+MySQL             | 5.6                | Database
+Phusion Passenger | see [docker-passengner-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)          | Web server
+Nginx             | see [docker-passengner-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)            | HTTP server & Reverse proxy
+Ruby              | see [docker-rails](https://github.com/dell-cloud-marketplace/docker-rails/) | Programming language
+Ruby on Rails     | see [docker-rails](https://github.com/dell-cloud-marketplace/docker-rails/)     | Web application framework
 
 ## Usage
 
@@ -21,12 +23,13 @@ Ruby on Rails | see [docker-rails](https://github.com/dell-cloud-marketplace/doc
 To start your container with:
 
 * A named container ("spree")
-* Host port 3000 mapped to container port 3000 (default Spree application port)
+* Host port 80 mapped to container port 80 (default Nginx server port)
+* Host port 433 mapped to container port 433 (HTTPS port)
 * Host port 3306 mapped to container port 3306 (default MySQL port)
 
 Do:
 
-    sudo docker run -d -p 3000:3000 -p 3306:3306 --name spree dell/spree
+    sudo docker run -d -p 80:80 -p 443:443 -p 3306:3306 --name spree dell/spree
 
 To access the Spree application from your browser (this can take some time due to scripts running during container start up but usually is under a mintue), do:
 
@@ -35,7 +38,7 @@ To access the Spree application from your browser (this can take some time due t
 ### Advanced Example 1
 To start your image with an app volume (which will survive a restart) for the Spree application this includes the database and configuration files, do:
 
-    sudo docker run -d -p 3000:3000 -p 3306:3306 -v /app:/app --name spree dell/spree
+    sudo docker run -d -p 80:80 -p 443:443 -p 3306:3306 -v /app:/app --name spree dell/spree
 
 ### Advanced Example 2
 * To start your image with two data volumes (which will survive a restart). The MySQL data is available in ***/data/mysql*** on the host. The Spree application files are available in ***/app*** on the host.
@@ -43,7 +46,8 @@ To start your image with an app volume (which will survive a restart) for the Sp
 
 ```no-highlight
 sudo docker run -d \
--p 3000:3000 \
+-p 80:80 \
+-p 443:443 \
 -p 3306:3306 \
 -v /app:/app \
 -v /data/mysql:/var/lib/mysql \
@@ -77,7 +81,7 @@ You can then connect to the admin console...
 
 The Spree administration console can be accessed by the below URL. Enter the admin default credentials username ```spree@example.com``` and password ```spree123```.
 
-     http://localhost:3000/admin
+     http://localhost/admin
 
 
 ###Database Management
