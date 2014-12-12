@@ -62,7 +62,7 @@ sudo docker run -d \
 If you haven't defined a MySQL password, the container will generate a random one. Check the logs for the password by running:
 
 ```no-highlight
-sudo docker logs joomla
+sudo docker logs spree
 ```
 
 You will see output like the following:
@@ -131,8 +131,8 @@ Spree supports extensions that provide the facility to customise Spree website. 
 
 To Do:
 
-     bundle install
-     
+    bundle install
+ 
 Followed by copying the necessary migrations if it is an extension.
 
     bundle exec rails g gem_name:install
