@@ -1,5 +1,5 @@
 #docker-spree
-This is a base Docker image to run a [Spree Commerce](http://spreecommerce.com/) - an open-source e-commerce Rails application. This image extends the [dell/docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base) image which adds Phusion Passengner and Ngnix. Please refer to the README.md for selected images for further information.
+This image installs [Spree Commerce](http://spreecommerce.com/) - an open-source e-commerce Rails application. This image extends the [dell/docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base) image which adds Phusion Passengner and Ngnix. Please refer to the README.md for selected images for further information.
 
 
 
