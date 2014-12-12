@@ -1,5 +1,5 @@
 #docker-spree
-This is a base Docker image to run a [Spree Commerce](http://spreecommerce.com/) - an open-source e-commerce Rails application. This image extends the [dell/docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base) image which adds Phusion Passengner and Ngnix. Please refer to the README.md for selected images for more info.
+This is a base Docker image to run a [Spree Commerce](http://spreecommerce.com/) - an open-source e-commerce Rails application. This image extends the [dell/docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base) image which adds Phusion Passengner and Ngnix. Please refer to the README.md for selected images for further information.
 
 
 
@@ -18,48 +18,56 @@ Ruby on Rails     | see [docker-rails](https://github.com/dell-cloud-marketplace
 
 ## Usage
 
-### Start the container
+### 1. Start the container
+If you wish to create data volumes, which will survive a restart or recreation of the container, please follow the instructions in [Advanced Usage](#advanced-usage).
 
-To start your container with:
+#### A. Basic Usage
+Start the container:
 
 * A named container ("spree")
-* Host port 80 mapped to container port 80 (default Nginx server port)
-* Host port 433 mapped to container port 433 (HTTPS port)
-* Host port 3306 mapped to container port 3306 (default MySQL port)
+* Ports 80, 443 (Nginx) and 3306 (MySQL port) exposed
 
-Do:
+As follows:
 
-    sudo docker run -d -p 80:80 -p 443:443 -p 3306:3306 --name spree dell/spree
+```no-highlight
+sudo docker run -d -p 80:80 -p 443:443 -p 3306:3306 --name spree dell/spree
+```
 
-To access the Spree application from your browser (this can take some time due to scripts running during container start up but usually is under a mintue), do:
+<a name="advanced-usage"></a>
+#### B. Advanced Usage
+Start your container with:
 
-    http://localhost:3000/
-
-### Advanced Example 1
-To start your image with an app volume (which will survive a restart) for the Spree application this includes the database and configuration files, do:
-
-    sudo docker run -d -p 80:80 -p 443:443 -p 3306:3306 -v /app:/app --name spree dell/spree
-
-### Advanced Example 2
-* To start your image with two data volumes (which will survive a restart). The MySQL data is available in ***/data/mysql*** on the host. The Spree application files are available in ***/app*** on the host.
+* A named container ("spree")
+* Ports 80, 443 (Nginx) and port 3306 (MySQL port) exposed
+* Four data volumes (which will survive a restart or recreation of the container). The Spree application files are available in **/app** on the host. The Nginx website configuration files are available in **/opt/nginx** on the host. The Nginx log files are available in **/var/log/nginx** on the host. The MySQL data is available in ***/data/mysql*** on the host.
 * A predefined password for the MySQL admin user.
+
+As follows:
 
 ```no-highlight
 sudo docker run -d \
--p 80:80 \
--p 443:443 \
--p 3306:3306 \
--v /app:/app \
--v /data/mysql:/var/lib/mysql \
--e MYSQL_PASS="mypass"  \
---name spree dell/spree
+ -p 80:80 \
+ -p 443:443 \
+ -p 3306:3306 \
+ -v /app:/app \
+ -v /var/log/nginx:/var/log/nginx \
+ -v /data/nginx:/opt/nginx/conf \
+ -v /data/mysql:/var/lib/mysql \
+ -e MYSQL_PASS="mypass"  \
+ --name spree dell/spree
 ```
 
-## Administration
+## Check the Log Files
 
-### Connecting to MySQL
-The first time that you run your container, a new user 'admin' with all privileges will be created in MySQL with a random password. To get the password, check the container logs (```docker logs spree```). You will see output like the following:
+If you haven't defined a MySQL password, the container will generate a random one. Check the logs for the password by running:
 
+```no-highlight
+sudo docker logs joomla
+```
+
+You will see output like the following:
+
+```no-highlight
     ===================================================================
     You can now connect to this MySQL Server using:
 
@@ -68,7 +76,7 @@ The first time that you run your container, a new user 'admin' with all privileg
     Please remember to change the above password as soon as possible!
     MySQL user 'root' has no password but only allows local connections
     ===================================================================
-
+```
 
 In this case, **47nnf4FweaKu** is the password allocated to the admin user.
 
@@ -76,13 +84,40 @@ You can then connect to the admin console...
 
     mysql -u admin -p 47nnf4FweaKu --host 127.0.0.1 --port 3306
 
-     
+## Test your deployment
+
+The Spree application can take some time to run due to scripts executed at start up but this usually is under a minute. You can check the progress by following the logs '**sudo docker logs follow spree**' until the Nginx service is running.
+
+To access the website, open:
+```no-highlight
+http://localhost
+```
+Or:
+
+```no-highlight
+https://localhost
+```
+
+**We strongly recommend that you connect via HTTPS**, for this step, and all subsequent administrative tasks, if the container is running outside your local machine (e.g. in the Cloud). Your browser will warn you that the certificate is not trusted. If you are unclear about how to proceed, please consult your browser's documentation on how to accept the certificate.
+
+Or with cURL:
+```no-highlight
+curl http://localhost
+```
+
 ###Administration Web Console
 
 The Spree administration console can be accessed by the below URL. Enter the admin default credentials username ```spree@example.com``` and password ```spree123```.
 
      http://localhost/admin
 
+###Environment
+
+The Spree application has been deployed to a development environment, details on environment settings for Phusion Passenger with Nginx and Spree are as follow:
+
+•	[Phusion Passenger](https://www.phusionpassenger.com/documentation/Users%20guide%20Nginx.html#PassengerAppEnv)
+•	[Spree Deployment](https://guides.spreecommerce.com/developer/deployment_tips.html)
+•	[Ruby on Rails configuration](http://guides.rubyonrails.org/configuring.html)
 
 ###Database Management
 
