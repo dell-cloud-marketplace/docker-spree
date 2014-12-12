@@ -1,4 +1,4 @@
-FROM dell/rails
+FROM dell/passenger-base
 MAINTAINER Dell Cloud Market Place <Cloud_Marketplace@dell.com>
 
 # Set environment variable for package install
@@ -11,16 +11,21 @@ RUN apt-get update && apt-get install -yq \
     nodejs \
     imagemagick \
     zlib1g-dev \
-    libmysqlclient-dev
-
+    libmysqlclient-dev \
+    pwgen \
+    supervisor
 
 # Copy configuration files
 ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 ADD my.cnf /etc/mysql/conf.d/my.cnf
+ADD supervisord-nginx.conf /etc/supervisor/conf.d/supervisord-nginx.conf
 
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql/*
+
+# Start Nginx / Passenger
+RUN rm -f /etc/service/nginx/down
 
 # Add MySQL utils
 ADD create_mysql_admin_user.sh /create_mysql_admin_user.sh
@@ -36,13 +41,12 @@ RUN gem install spree -v 2.3.4
 RUN rails _4.1.6_ new /app -s -d mysql
 
 RUN cp -r /app /tmp/
+RUN cp -r /opt/nginx/conf /tmp/
 
 # Set volume folder for spree application files
-VOLUME ["/app", "/var/lib/mysql"]
+VOLUME ["/app", "/var/lib/mysql","/opt/nginx/conf","/var/log/nginx"]
 
-# Spree directory
-WORKDIR /app
+# Expose port
+EXPOSE 3306 80 443
 
-# Expose Spree port
-EXPOSE 3000 3306
 CMD ["/run.sh"]

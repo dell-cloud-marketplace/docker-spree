@@ -2,12 +2,16 @@
 
 VOLUME_HOME="/app"
 VOLUME_MYSQL="/var/lib/mysql"
+VOLUME_NGINX="/opt/nginx/conf"
 
 # Test if VOLUME_HOME has content
 if [[ ! "$(ls -A $VOLUME_HOME)" ]]; then
      echo "Add Spree at $VOLUME_HOME"
      cp -R /tmp/app/* $VOLUME_HOME
 fi
+
+# Add correct permissions
+chown -R www-data $VOLUME_HOME/tmp/
 
 # Test MySQL VOLUME_HOME_MYSQL has content
 if [[ ! -d $VOLUME_MYSQL/mysql ]]; then
@@ -31,6 +35,11 @@ while [[ RET -ne 0 ]]; do
   RET=$?
 done
 
+# Test if VOLUME_NGINX has content
+if [[ ! "$(ls -A $VOLUME_NGINX)" ]]; then
+      cp -R /tmp/conf/* $VOLUME_NGINX
+fi
+
 # Create Spree database
 cd /app && rake db:create db:migrate
 
@@ -42,6 +51,6 @@ if [ ! -f "$VOLUME_HOME/config/initializers/devise.rb" ]; then
   cd /app && bundle exec rails g spree:auth:install
 fi
 
-# Start Rails server
-/app/bin/bundle exec rails server
 
+# Start nginx
+exec supervisord -n 
