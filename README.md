@@ -11,8 +11,8 @@ Name              | Version    | Description
 Ubuntu            | Trusty             | Operating system
 Spree             | 2.3.4              | E-commerce software
 MySQL             | 5.6                | Database
-Phusion Passenger | see [docker-passengner-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)          | Web server
-Nginx             | see [docker-passengner-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)            | HTTP server & Reverse proxy
+Phusion Passenger | see [docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)          | Web server
+Nginx             | see [docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)            | HTTP server & Reverse proxy
 Ruby              | see [docker-rails](https://github.com/dell-cloud-marketplace/docker-rails/) | Programming language
 Ruby on Rails     | see [docker-rails](https://github.com/dell-cloud-marketplace/docker-rails/)     | Web application framework
 
