@@ -50,11 +50,5 @@ echo 'Devise.secret_key = "'$TOKEN_KEY'"' > $VOLUME_HOME/config/initializers/dev
 # Install Spree
 spree install -A /app
 
-# Add Spree authentication if not added
-if [ ! -f "$VOLUME_HOME/config/initializers/devise.rb" ]; then
-  cd /app && bundle exec rails g spree:auth:install
-fi
-
-
 # Start nginx
 exec supervisord -n 
