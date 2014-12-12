@@ -43,6 +43,10 @@ fi
 # Create Spree database
 cd /app && rake db:create db:migrate
 
+# Generate Devise Secret Key
+TOKEN_KEY=`rake secret`
+echo 'Devise.secret_key = "'$TOKEN_KEY'"' > $VOLUME_HOME/config/initializers/devise.rb
+
 # Install Spree
 spree install -A /app
 
