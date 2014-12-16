@@ -38,7 +38,7 @@ Start your container with:
 
 * A named container ("spree")
 * Ports 80, 443 (Nginx) and port 3306 (MySQL port) exposed
-* Four data volumes (which will survive a restart or recreation of the container). The Spree application files are available in **/app** on the host. The Nginx website configuration files are available in **/opt/nginx** on the host. The Nginx log files are available in **/var/log/nginx** on the host. The MySQL data is available in ***/data/mysql*** on the host.
+* Four data volumes (which will survive a restart or recreation of the container). The Spree application files are available in **/app** on the host. The Nginx website configuration files are available in **/data/nginx** on the host. The Nginx log files are available in **/var/log/nginx** on the host. The MySQL data is available in ***/data/mysql*** on the host.
 * A predefined password for the MySQL admin user.
 
 As follows:
@@ -85,7 +85,7 @@ You can then connect to the admin console...
 
 ## Test your deployment
 
-The Spree application can take some time to run due to scripts executed at start up but this usually is under a minute. You can check the progress by following the logs '**sudo docker logs follow spree**' until the Nginx service is running.
+The Spree application can take some time to run due to scripts executed at start up but this usually is under a minute. You can check the progress by following the logs '**sudo docker logs --follow spree**' until the Nginx service is running.
 
 To access the website, open:
 ```no-highlight
@@ -110,23 +110,41 @@ The Spree administration console can be accessed by the below URL. Enter the adm
 
      http://localhost/admin
 
+###Nginx Configuration
+
+If you used the volume mapping option as listed in the [Advanced Usage](#advanced-usage), you can directly change the Nginx configuration under **/data/nginx/** on the host. A reload of the Nginx server is required once changes have been made.
+
+* Restart Nginx Configuration
+
+```no-highlight
+supervisorctl restart nginx
+```
+
+As the Nginx service does a reload the child processes (Passenger) will also do a restart, spawning a new pid. Please note the below message will occur in the docker logs as a result:
+
+```no-highlight
+2014-12-16 12:15:38,083 CRIT reaped unknown pid 2806)
+2014-12-16 12:15:38,085 CRIT reaped unknown pid 2811)
+2014-12-16 12:15:39,118 CRIT reaped unknown pid 2842)
+```
+
 ###Environment
 
 The Spree application has been deployed to a development environment, details on environment settings for Phusion Passenger with Nginx and Spree are as follow:
 
-•	[Phusion Passenger](https://www.phusionpassenger.com/documentation/Users%20guide%20Nginx.html#PassengerAppEnv)
-•	[Spree Deployment](https://guides.spreecommerce.com/developer/deployment_tips.html)
-•	[Ruby on Rails configuration](http://guides.rubyonrails.org/configuring.html)
+* [Phusion Passenger](https://www.phusionpassenger.com/documentation/Users%20guide%20Nginx.html#PassengerAppEnv)
+* [Spree Deployment](https://guides.spreecommerce.com/developer/deployment_tips.html)
+* [Ruby on Rails configuration](http://guides.rubyonrails.org/configuring.html)
 
 ###Database Management
 
 Spree database configuration details can be located from database.yml on the host if volume mapping is set up. If changes to the database are required the tool rake is used from within the container. 
 
-Currently (with Docker 1.2), the first step is to install [nsenter](https://github.com/jpetazzo/nsenter) on the host. If you are a DCM user, please ssh into the instance. Below are a few useful commands that should be run from the ***/app*** directory. Please note the updated changes will require a Rails Server restart from the container.
+Currently (with Docker 1.2), the first step is to install [nsenter](https://github.com/jpetazzo/nsenter) on the host. If you are a DCM user, please ssh into the instance. Rake commands are run from the ***/app*** directory.
 
 ###Customisation
 
-Spree supports extensions that provide the facility to customise Spree website. Extensions are reusable  code that facilitate a range of functionality, they can be found in the  [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file(this resides in the project root folder ***/app*** which can be accessed from the host).  Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container.
+Spree supports extensions that provide the facility to customise Spree website. Extensions are reusable  code that facilitate a range of functionality, they can be found in the  [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file(this resides in the project root folder ***/app*** which can be accessed from the host if volume mapping has been added). Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container.
 
 To Do:
 
