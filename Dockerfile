@@ -24,9 +24,6 @@ ADD supervisord-nginx.conf /etc/supervisor/conf.d/supervisord-nginx.conf
 # Remove pre-installed database
 RUN rm -rf /var/lib/mysql/*
 
-# Start Nginx / Passenger
-RUN rm -f /etc/service/nginx/down
-
 # Add MySQL utils
 ADD create_mysql_admin_user.sh /create_mysql_admin_user.sh
 RUN chmod 755 /*.sh
