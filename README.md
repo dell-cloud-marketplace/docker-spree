@@ -80,8 +80,9 @@ You will see output like the following:
 In this case, **47nnf4FweaKu** is the password allocated to the admin user.
 
 You can then connect to the admin console...
-
-    mysql -u admin -p 47nnf4FweaKu --host 127.0.0.1 --port 3306
+```no-highlight
+mysql -u admin -p 47nnf4FweaKu --host 127.0.0.1 --port 3306
+```
 
 ## Test your deployment
 
@@ -108,7 +109,9 @@ curl http://localhost
 
 The Spree administration console can be accessed by the below URL. Enter the admin default credentials username ```spree@example.com``` and password ```spree123```.
 
-     http://localhost/admin
+```no-highlight
+http://localhost/admin
+```
 
 ###Nginx Configuration
 
@@ -128,7 +131,7 @@ As the Nginx service does a reload the child processes (Passenger) will also do 
 2014-12-16 12:15:39,118 CRIT reaped unknown pid 2842)
 ```
 
-###Environment
+### Environment
 
 The Spree application has been deployed to a development environment, details on environment settings for Phusion Passenger with Nginx and Spree are as follow:
 
@@ -136,27 +139,29 @@ The Spree application has been deployed to a development environment, details on
 * [Spree Deployment](https://guides.spreecommerce.com/developer/deployment_tips.html)
 * [Ruby on Rails configuration](http://guides.rubyonrails.org/configuring.html)
 
-###Database Management
+### Database Management
 
 Spree database configuration details can be located from database.yml on the host if volume mapping is set up. If changes to the database are required the tool rake is used from within the container. 
 
 Currently (with Docker 1.2), the first step is to install [nsenter](https://github.com/jpetazzo/nsenter) on the host. If you are a DCM user, please ssh into the instance. Rake commands are run from the ***/app*** directory.
 
-###Customisation
+### Customisation
 
-Spree supports extensions that provide the facility to customise Spree website. Extensions are reusable  code that facilitate a range of functionality, they can be found in the  [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file(this resides in the project root folder ***/app*** which can be accessed from the host if volume mapping has been added). Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container.
+Spree supports extensions that provide the facility to customise Spree website. Extensions are reusable  code that facilitate a range of functionality, they can be found in the  [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file (this resides in the project root folder ***/app*** which can be accessed from the host if volume mapping has been added). Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container.
 
 To Do:
-
-    bundle install
+```no-highlight
+ bundle install
+ ```
  
 Followed by copying the necessary migrations if it is an extension.
-
-    bundle exec rails g gem_name:install
+```no-highlight
+bundle exec rails g gem_name:install
+```
 
 In general Spree follows an MVC framework. Models, views and controllers reside under directory ***/app/app***. The assets directory is where the stylesheets, JavaScript and images can be found. There are guidelines on how best to customise Spree website in particular [Spree’s Asset Pipeline](https://github.com/spree/spree-guides/blob/master/content/developer/customization/asset.markdown).
 
-###Getting Started
+### Getting Started
 
 There is comprehensive documentation on using Spree, customisation and REST API information. Below are some guidelines and documentation as a starting guide.
 
@@ -164,12 +169,10 @@ There is comprehensive documentation on using Spree, customisation and REST API 
 * [Spree API Guide](http://guides.spreecommerce.com/api/)
 * [Spree Source](https://github.com/spree/spree/tree/2-4-stable)
 
-
-
 ## Reference
 
 ### Image Details
 
-Based on [rlister/dockerfiles](https://github.com/rlister/dockerfiles/tree/master/spree)
+Inspired by [rlister/dockerfiles](https://github.com/rlister/dockerfiles/tree/master/spree)
 
 Pre-built Image   | [https://registry.hub.docker.com/u/dell/spree](https://registry.hub.docker.com/u/dell/spree) 
