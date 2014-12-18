@@ -115,7 +115,7 @@ http://localhost/admin
 
 ###Nginx Configuration
 
-If you used the volume mapping option as listed in the [Advanced Usage](#advanced-usage), you can directly change the Nginx configuration under **/data/nginx/** on the host. A reload of the Nginx server is required once changes have been made.
+If you used the volume mapping option as listed in the [Advanced Usage](#advanced-usage), you can directly change the Nginx configuration under **/data/nginx/** on the host. A restart of the Nginx server is required once changes have been made.
 
 * Restart Nginx Configuration
 
@@ -123,7 +123,7 @@ If you used the volume mapping option as listed in the [Advanced Usage](#advance
 supervisorctl restart nginx
 ```
 
-As the Nginx service does a reload the child processes (Passenger) will also do a restart, spawning a new pid. Please note the below message will occur in the docker logs as a result:
+As the Nginx service does a restart the child processes (Passenger) will also do a restart, spawning a new pid. Please note the below message will occur in the docker logs as a result:
 
 ```no-highlight
 2014-12-16 12:15:38,083 CRIT reaped unknown pid 2806)
