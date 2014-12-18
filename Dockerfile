@@ -17,7 +17,6 @@ RUN apt-get update && apt-get install -yq \
 
 # Copy configuration files
 ADD run.sh /run.sh
-RUN chmod 755 /*.sh
 ADD my.cnf /etc/mysql/conf.d/my.cnf
 ADD supervisord-nginx.conf /etc/supervisor/conf.d/supervisord-nginx.conf
 
