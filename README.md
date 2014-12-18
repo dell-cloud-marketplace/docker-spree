@@ -17,7 +17,7 @@ Ruby on Rails     | see [docker-rails](https://github.com/dell-cloud-marketplace
 
 ## Usage
 
-### 1. Start the container
+### 1. Start the Container
 If you wish to create data volumes, which will survive a restart or recreation of the container, please follow the instructions in [Advanced Usage](#advanced-usage).
 
 #### A. Basic Usage
@@ -147,7 +147,7 @@ Currently (with Docker 1.2), the first step is to install [nsenter](https://gith
 
 ### Customisation
 
-Spree supports extensions that provide the facility to customise Spree website. Extensions are reusable code that facilitate a range of functionality, they can be found in the [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file (this resides in the project root folder ***/app*** which can be accessed from the host if volume mapping has been added). Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container.
+Spree supports extensions that provide the facility to customise the Spree website, they can be found in the [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file (this resides in the project root folder ***/app*** which can be accessed from the host if volume mapping has been added). Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container via [nsenter](https://github.com/jpetazzo/nsenter) or If you are a DCM user, please ssh into the instance.
 
 To Do:
 ```no-highlight
