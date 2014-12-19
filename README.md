@@ -45,15 +45,15 @@ As follows:
 
 ```no-highlight
 sudo docker run -d \
- -p 80:80 \
- -p 443:443 \
- -p 3306:3306 \
- -v /app:/app \
- -v /var/log/nginx:/var/log/nginx \
- -v /data/nginx:/opt/nginx/conf \
- -v /data/mysql:/var/lib/mysql \
- -e MYSQL_PASS="mypass"  \
- --name spree dell/spree
+    -p 80:80 \
+    -p 443:443 \
+    -p 3306:3306 \
+    -v /app:/app \
+    -v /var/log/nginx:/var/log/nginx \
+    -v /data/nginx:/opt/nginx/conf \
+    -v /data/mysql:/var/lib/mysql \
+    -e MYSQL_PASS="mypass"  \
+    --name spree dell/spree
 ```
 
 ## Check the Log Files
