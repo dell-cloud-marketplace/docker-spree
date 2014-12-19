@@ -56,7 +56,7 @@ sudo docker run -d \
     --name spree dell/spree
 ```
 
-## Check the Log Files
+### 2. Check the Log Files
 
 If you haven't defined a MySQL password, the container will generate a random one. Check the logs for the password by running:
 
