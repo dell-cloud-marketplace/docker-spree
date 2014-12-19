@@ -84,7 +84,7 @@ You can then connect to the admin console...
 mysql -u admin -p 47nnf4FweaKu --host 127.0.0.1 --port 3306
 ```
 
-## Test your deployment
+## Test your Deployment
 
 The Spree application can take some time to run due to scripts executed at start up but this usually is under a minute. You can check the progress by following the logs '**sudo docker logs --follow spree**' until the Nginx service is running.
 
