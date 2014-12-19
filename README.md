@@ -115,9 +115,7 @@ http://localhost/admin
 
 ### Nginx Configuration
 
-If you used the volume mapping option as listed in the [Advanced Usage](#advanced-usage), you can directly change the Nginx configuration under **/data/nginx/** on the host. A restart of the Nginx server is required once changes have been made.
-
-* Restart Nginx Configuration
+If you used the volume mapping option as listed in the [Advanced Usage](#advanced-usage), you can directly change the Nginx configuration under **/data/nginx/** on the host. To restart the configuration, enter the container using [nsenter](https://github.com/dell-cloud-marketplace/additional-documentation/blob/master/nsenter.md), and do:
 
 ```no-highlight
 supervisorctl restart nginx
@@ -141,13 +139,11 @@ The Spree application has been deployed to a development environment, details on
 
 ### Database Management
 
-Spree database configuration details can be located from database.yml on the host if volume mapping is set up. If changes to the database are required the tool rake is used from within the container. 
-
-Currently (with Docker 1.2), the first step is to install [nsenter](https://github.com/jpetazzo/nsenter) on the host. If you are a DCM user, please ssh into the instance. Rake commands are run from the ***/app*** directory.
+Spree database configuration details can be located from database.yml on the host if volume mapping is set up. If changes to the database are required the tool rake is used from within the container. Please use [nsenter](https://github.com/dell-cloud-marketplace/additional-documentation/blob/master/nsenter.md) to enter in the container. If you are a DCM user, please ssh into the instance. Rake commands are run from the ***/app*** directory.
 
 ### Customisation
 
-Spree supports extensions that provide the facility to customise the Spree website, they can be found in the [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file (this resides in the project root folder ***/app*** which can be accessed from the host if volume mapping has been added). Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container via [nsenter](https://github.com/jpetazzo/nsenter) or If you are a DCM user, please ssh into the instance.
+Spree supports extensions that provide the facility to customise the Spree website, they can be found in the [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file (this resides in the project root folder ***/app*** which can be accessed from the host if volume mapping has been added). Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container via [nsenter](https://github.com/dell-cloud-marketplace/additional-documentation/blob/master/nsenter.md) or If you are a DCM user, please ssh into the instance.
 
 To Do:
 ```no-highlight
