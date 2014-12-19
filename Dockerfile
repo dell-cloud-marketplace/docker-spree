@@ -1,4 +1,4 @@
-FROM dell/passenger-base
+FROM dell/passenger-base:1.0
 MAINTAINER Dell Cloud Market Place <Cloud_Marketplace@dell.com>
 
 # Set environment variable for package install
