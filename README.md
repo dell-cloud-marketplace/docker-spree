@@ -1,6 +1,7 @@
 # docker-spree
-This image installs [Spree Commerce](http://spreecommerce.com/) - an open-source e-commerce Rails application. 
-It extends the [dell/docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base) image which adds Phusion Passengner and Ngnix. Please refer to the README.md for selected images for further information.
+This image installs [Spree Commerce](http://spreecommerce.com/), an open-source, e-commerce Rails application. 
+
+The image extends [dell/docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base) which, in turn, adds Phusion Passenger and Ngnix to [dell/docker-rails-base](https://github.com/dell-cloud-marketplace/docker-rails-base/). Please refer to the image README.md files for further information.
 
 ## Components
 The software stack comprises the following components:
@@ -10,10 +11,10 @@ Name              | Version    | Description
 Ubuntu            | Trusty             | Operating system
 Spree             | 2.3.4              | E-commerce software
 MySQL             | 5.6                | Database
-Phusion Passenger | see [docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)          | Web server
-Nginx             | see [docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)            | HTTP server & Reverse proxy
-Ruby              | see [docker-rails](https://github.com/dell-cloud-marketplace/docker-rails/) | Programming language
-Ruby on Rails     | see [docker-rails](https://github.com/dell-cloud-marketplace/docker-rails/)     | Web application framework
+Phusion Passenger | see [docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)          | Application server
+Nginx             | see [docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)            | Web server
+Ruby              | see [docker-rails-base](https://github.com/dell-cloud-marketplace/docker-rails-base/) | Programming language
+Ruby on Rails     | see [docker-rails-base](https://github.com/dell-cloud-marketplace/docker-rails-base/)     | Web application framework
 
 ## Usage
 
@@ -21,10 +22,10 @@ Ruby on Rails     | see [docker-rails](https://github.com/dell-cloud-marketplace
 If you wish to create data volumes, which will survive a restart or recreation of the container, please follow the instructions in [Advanced Usage](#advanced-usage).
 
 #### A. Basic Usage
-Start the container:
+Start the container with:
 
 * A named container ("spree")
-* Ports 80, 443 (Nginx) and 3306 (MySQL port) exposed
+* Ports 80, 443 (Nginx) and 3306 (MySQL) exposed
 
 As follows:
 
@@ -37,8 +38,8 @@ sudo docker run -d -p 80:80 -p 443:443 -p 3306:3306 --name spree dell/spree
 Start your container with:
 
 * A named container ("spree")
-* Ports 80, 443 (Nginx) and port 3306 (MySQL port) exposed
-* Four data volumes (which will survive a restart or recreation of the container). The Spree application files are available in **/app** on the host. The Nginx website configuration files are available in **/data/nginx** on the host. The Nginx log files are available in **/var/log/nginx** on the host. The MySQL data is available in ***/data/mysql*** on the host.
+* Ports 80, 443 (Nginx) and port 3306 (MySQL) exposed
+* Four data volumes (which will survive a restart or recreation of the container). The Spree application files are available in **/app** on the host. The Nginx website configuration files are available in **/data/nginx** on the host. The Nginx log files are available in **/var/log/nginx** on the host. The MySQL data is available in **/data/mysql** on the host.
 * A predefined password for the MySQL admin user.
 
 As follows:
@@ -67,14 +68,14 @@ sudo docker logs spree
 You will see output like the following:
 
 ```no-highlight
-    ===================================================================
-    You can now connect to this MySQL Server using:
+===================================================================
+You can now connect to this MySQL Server using:
 
-        mysql -u admin -p47nnf4FweaKu -h<host> -P<port>
+    mysql -u admin -p47nnf4FweaKu -h<host> -P<port>
 
-    Please remember to change the above password as soon as possible!
-    MySQL user 'root' has no password but only allows local connections
-    ===================================================================
+Please remember to change the above password as soon as possible!
+MySQL user 'root' has no password but only allows local connections
+===================================================================
 ```
 
 In this case, **47nnf4FweaKu** is the password allocated to the admin user.
@@ -86,32 +87,33 @@ mysql -u admin -p 47nnf4FweaKu --host 127.0.0.1 --port 3306
 
 ## Test your Deployment
 
-The Spree application can take some time to run due to scripts executed at start up but this usually is under a minute. You can check the progress by following the logs '**sudo docker logs --follow spree**' until the Nginx service is running.
+The Spree application takes about a minute to start up, as various scripts are run. You can check the progress by following the logs '**sudo docker logs --follow spree**' until the Nginx service is running.
 
 To access the website, open:
 ```no-highlight
 http://localhost
 ```
-Or:
+
+Or use cURL:
+```no-highlight
+curl http://localhost
+```
+
+The container supports SSL, via a self-signed certificate. **We strongly recommend that you connect via HTTPS**, if the container is running outside your local machine (e.g. in the Cloud). Your browser will warn you that the certificate is not trusted. If you are unclear about how to proceed, please consult your browser's documentation on how to accept the certificate.
 
 ```no-highlight
 https://localhost
 ```
 
-The container supports SSL, via a self-signed certificate. **We strongly recommend that you connect via HTTPS**, if the container is running outside your local machine (e.g. in the Cloud). Your browser will warn you that the certificate is not trusted. If you are unclear about how to proceed, please consult your browser's documentation on how to accept the certificate.
-
-Or with cURL:
-```no-highlight
-curl http://localhost
-```
-
 ### Administration Web Console
 
-The Spree administration console can be accessed by the below URL. Enter the admin default credentials username ```spree@example.com``` and password ```spree123```.
+The Spree administration console can be accessed via the following URL:
 
 ```no-highlight
-http://localhost/admin
+https://localhost/admin
 ```
+
+ The default credentials are (email) ```spree@example.com``` and (password) ```spree123```. **Please change these details immediately** (select menu item **My Account**, then **Edit**).
 
 ### Nginx Configuration
 
@@ -121,7 +123,7 @@ If you used the volume mapping option as listed in the [Advanced Usage](#advance
 supervisorctl restart nginx
 ```
 
-As the Nginx service does a restart the child processes (Passenger) will also do a restart, spawning a new pid. Please note the below message will occur in the docker logs as a result:
+As the Nginx service restarts, the child processes (Passenger) will also restart, spawning new PIDs. You will see messages similar to the following, in the Docker logs:
 
 ```no-highlight
 2014-12-16 12:15:38,083 CRIT reaped unknown pid 2806)
@@ -131,7 +133,7 @@ As the Nginx service does a restart the child processes (Passenger) will also do
 
 ### Environment
 
-The Spree application has been deployed to a development environment, details on environment settings for Phusion Passenger with Nginx and Spree are as follow:
+The Spree application is deployed in development mode. Details on environment settings for Phusion Passenger with Nginx and Spree may be found here:
 
 * [Phusion Passenger](https://www.phusionpassenger.com/documentation/Users%20guide%20Nginx.html#PassengerAppEnv)
 * [Spree Deployment](https://guides.spreecommerce.com/developer/deployment_tips.html)
@@ -139,25 +141,33 @@ The Spree application has been deployed to a development environment, details on
 
 ### Database Management
 
-Spree database configuration details can be located from database.yml on the host if volume mapping is set up. If changes to the database are required the tool rake is used from within the container. Please use [nsenter](https://github.com/dell-cloud-marketplace/additional-documentation/blob/master/nsenter.md) to enter in the container. If you are a DCM user, please ssh into the instance. Rake commands are run from the ***/app*** directory.
+The Spree database configuration details are in **/app/config/database.yml**. If changes to the database are required, use [nsenter](https://github.com/dell-cloud-marketplace/additional-documentation/blob/master/nsenter.md) to enter the container,  and run **rake** commands from the **/app** directory.
 
 ### Customisation
 
-Spree supports extensions that provide the facility to customise the Spree website, they can be found in the [Spree Extension Registry](http://spreecommerce.com/extensions). Extensions can be installed by adding it to the bottom of the Gemfile file (this resides in the project root folder ***/app*** which can be accessed from the host if volume mapping has been added). Further information on installing and existing alternatively creating your own is detailed from the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html). Any gems added to Gemfile will require the bundler to be run from directory ***/app*** from within the container via [nsenter](https://github.com/dell-cloud-marketplace/additional-documentation/blob/master/nsenter.md) or If you are a DCM user, please ssh into the instance.
+It is possible to customise Spree by using extensions. Examples can be found in the [Spree Extension Registry](http://spreecommerce.com/extensions).
 
-To Do:
+To install an extension:
+
+1. Enter the container via [nsenter](https://github.com/dell-cloud-marketplace/additional-documentation/blob/master/nsenter.md) (if you are a DCM user, please ssh into the instance).
+2. Go to the project root folder, **/app** (which is also accessible from the host if volume mapping has been added).
+3. Add the extension to the bottom of the Gemfile.
+4. Run Bundler.
+
 ```no-highlight
- bundle install
- ```
- 
-Followed by copying the necessary migrations if it is an extension.
-```no-highlight
-bundle exec rails g gem_name:install
+bundle install
 ```
 
-### Getting Started
+Finally, copy over the required migrations and assets from the extension:
 
-There is comprehensive documentation on using Spree, customisation and REST API information. Below are some guidelines and documentation as a starting guide.
+```no-highlight
+bundle exec rails g (gem name):install
+```
+
+For more information, please refer to the [Spree Developers Guide](http://guides.spreecommerce.com/developer/extensions_tutorial.html).
+
+### Getting Started
+The following links are a good starting point on how to use and customise Spree:
 
 * [Spree Guides](http://guides.spreecommerce.com/)
 * [Spree API Guide](http://guides.spreecommerce.com/api/)
@@ -170,4 +180,4 @@ There is comprehensive documentation on using Spree, customisation and REST API 
 
 Inspired by [rlister/dockerfiles](https://github.com/rlister/dockerfiles/tree/master/spree)
 
-Pre-built Image   | [https://registry.hub.docker.com/u/dell/spree](https://registry.hub.docker.com/u/dell/spree) 
+Pre-built Image | [https://registry.hub.docker.com/u/dell/spree](https://registry.hub.docker.com/u/dell/spree) 
