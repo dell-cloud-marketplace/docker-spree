@@ -9,8 +9,8 @@ The software stack comprises the following components:
 Name              | Version    | Description
 ------------------|------------|------------------------------
 Ubuntu            | Trusty             | Operating system
-Spree             | 2.3.4              | E-commerce software
-MySQL             | 5.6                | Database
+Spree             | 3.0              | E-commerce software
+MySQL             | 5.5                | Database
 Phusion Passenger | see [docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)          | Application server
 Nginx             | see [docker-passenger-base](https://github.com/dell-cloud-marketplace/docker-passenger-base/)            | Web server
 Ruby              | see [docker-rails-base](https://github.com/dell-cloud-marketplace/docker-rails-base/) | Programming language
@@ -171,7 +171,7 @@ The following links are a good starting point on how to use and customise Spree:
 
 * [Spree Guides](http://guides.spreecommerce.com/)
 * [Spree API Guide](http://guides.spreecommerce.com/api/)
-* [Spree Source](https://github.com/spree/spree/tree/2-4-stable)
+* [Spree Source](https://github.com/spree/spree/tree/3-0-stable)
 * [Spree’s Asset Pipeline](https://github.com/spree/spree-guides/blob/master/content/developer/customization/asset.markdown)
 
 ## Reference
