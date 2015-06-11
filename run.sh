@@ -51,4 +51,4 @@ echo 'Devise.secret_key = "'$TOKEN_KEY'"' > $VOLUME_HOME/config/initializers/dev
 spree install -A /app
 
 # Start nginx
-exec supervisord -n 
+exec supervisord -n
