@@ -44,6 +44,9 @@ RUN cp -r /opt/nginx/conf /tmp/
 # Set volume folder for spree application files
 VOLUME ["/app", "/var/lib/mysql","/opt/nginx/conf","/var/log/nginx"]
 
+# Environmental variables
+ENV MYSQL_PASS ""
+
 # Expose port
 EXPOSE 3306 443 80
 
