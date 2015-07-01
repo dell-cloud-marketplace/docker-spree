@@ -176,6 +176,12 @@ The following links are a good starting point on how to use and customise Spree:
 
 ## Reference
 
+### Environmental Variables
+
+Variable   | Default  | Description
+-----------|----------|----------------------------------
+MYSQL_PASS | *random* | Password for MySQL user **admin**
+
 ### Image Details
 
 Inspired by [rlister/dockerfiles](https://github.com/rlister/dockerfiles/tree/master/spree)
